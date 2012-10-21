@@ -11,6 +11,8 @@ default[:bind9][:allow_update] = nil
 default[:bind9][:enable_forwarding] = false
 default[:bind9][:forwarders] = [ "4.4.4.4", "8.8.8.8" ]
 
+default[:bind9][:forward_zones] = Array.new
+
 case platform
 when "centos","redhat","fedora","scientific","amazon"
   default[:bind9][:config_path] = "/etc/named"

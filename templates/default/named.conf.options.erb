@@ -39,6 +39,17 @@ options {
     <% end %>
 };
 
+<% node[:bind9][:forward_zones].each do |zone| %>
+zone "<%= zone[:zone] %>" IN {
+	type forward;
+	forwarders {
+	   <% zone[:forwarders].each do |fwd| %>
+		<%= fwd %>;
+	   <% end %>
+	};
+};
+<% end %>
+
 logging {
   channel default_log {
     file "/var/log/bind/bind.log" versions 5 size 128M;
