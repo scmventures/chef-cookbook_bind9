@@ -1,5 +1,24 @@
 options {
-    directory "<%= node[:bind9][:data_path] %>";
+    directory          "<%= node[:bind9][:data_path] %>";
+    dump-file          "<%= node[:bind9][:data_path] %>/data/cache_dump.db";
+    statistics-file    "<%= node[:bind9][:data_path] %>/data/named_stats.txt";
+    memstatistics-file "<%= node[:bind9][:data_path] %>/data/named_mem_stats.txt";
+
+    managed-keys-directory "<%= node[:bind9][:data_path] %>/dynamic";
+    
+    <% if node[:bind9][:bindkeys_file] %>
+        bindkeys-file "<%= node[:bind9][:bindkeys_file] %>";
+    <% end %>
+    
+    <% if node[:bind9][:dnssec_enable] %>
+       	dnssec-enable <%= node[:bind9][:dnssec_enable] %>;
+    <% end %>
+    <% if node[:bind9][:dnssec_validation] %>
+       	dnssec-validation <%= node[:bind9][:dnssec_validation] %>;
+    <% end %>
+    <% if node[:bind9][:dnssec_lookaside] %>
+       	dnssec-lookaside <%= node[:bind9][:dnssec_lookaside] %>;
+    <% end %>
 
     // If there is a firewall between you and nameservers you want
     // to talk to, you may need to fix the firewall to allow multiple
@@ -7,9 +26,10 @@ options {
 
     <% if node[:bind9][:allow_query] %>
       allow-query {
-        "<%= node[:bind9][:allow_query] %>";
+      <% node[:bind9][:allow_query].each do |cidr| %>
+        <%= cidr %>;
+      <% end %>
       };
-
     <% end %>
       allow-recursion {
         <%= node[:bind9][:allow_recursion] %>;

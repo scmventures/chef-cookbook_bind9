@@ -13,6 +13,13 @@ default[:bind9][:forwarders] = [ "4.4.4.4", "8.8.8.8" ]
 
 default[:bind9][:forward_zones] = Array.new
 
+default[:bind9][:bindkeys_file] =  "/etc/named.iscdlv.key"
+
+default[:bind9][:dnssec_enable] = "yes"
+default[:bind9][:dnssec_validation] = "yes"
+default[:bind9][:dnssec_lookaside] = "auto"
+
+
 case platform
 when "centos","redhat","fedora","scientific","amazon"
   default[:bind9][:config_path] = "/etc/named"
