@@ -57,6 +57,9 @@ options {
     <% if node[:bind9][:enable_ipv6] %>
       listen-on-v6 { any; };
     <% end %>
+    <% if node[:bind9][:zone_statistics] %>
+      zone-statistics yes;
+    <% end %>
 };
 
 <% node[:bind9][:forward_zones].each do |zone| %>

@@ -19,6 +19,7 @@ default[:bind9][:dnssec_enable] = "yes"
 default[:bind9][:dnssec_validation] = "yes"
 default[:bind9][:dnssec_lookaside] = "auto"
 
+default[:bind9][:zone_statistics] = true
 
 case platform
 when "centos","redhat","fedora","scientific","amazon"
